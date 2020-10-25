@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Leaflet Map</title>
+	<!--Leaflet's CSS -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   
+     <!-- Javascript AFTER Leaflet's CSS -->
+	 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+	<style>
+		#mapid {height: 500px; width:500px;}
+    </style>
+</head>
+
+<body>
+	 <div id="mapid">
+		<!-- map div -->
+	 </div>
+
+
+
+    <script>
+		// map variable setting location and zoom
+		var mymap = L.map('mapid').setView([49.248471, -123.000769], 15);
+	
+	
+		// variable setting basemap and copy right attribute
+		var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(mymap);
+		
+		// marker variable setting marker location points at sw1 building
+		var marker = L.marker([49.250771, -123.002769]).addTo(mymap);
+		
+		//circle variable with color and radius options circles sw9 building
+		var circle = L.circle([49.248471, -123.002769], {
+			color: 'blue',
+			opacity: 0.3,
+			fillColor: 'gray',
+			fillOpacity: 0.3,
+			radius: 50
+			}).addTo(mymap);
+			
+		// polygon variable at the track field
+		var polygon = L.polygon([
+			[49.248500, -123.001300],
+			[49.248500, -123.000250],
+			[49.245500, -123.000200],
+			[49.245500, -123.001300]
+			]).addTo(mymap);
+		
+		//pop up methods for marker/circle/polygon
+		marker.bindPopup("<b>This is</b><br>SW1 Building").openPopup();
+		circle.bindPopup("<b>This is</b><br>SW9 Building");
+		polygon.bindPopup("<b>This is</b><br>The Track Field");
+		
+		//popup on click section
+		var popup = L.popup();
+
+		function onMapClick(location) {
+			popup
+			.setLatLng(location.latlng)
+			.setContent("You clicked the map at " + location.latlng.toString())
+			.openOn(mymap);} 
+			mymap.on('click', onMapClick);
+		
+		
+	</script>
+</body>
+
+</html>
